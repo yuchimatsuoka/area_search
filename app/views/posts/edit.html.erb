@@ -1,0 +1,7 @@
+<div class='contents row'>
+  <%= form_tag("/posts/#{@post.id}",method: :patch) do %>
+    <h3>編集する</h3>
+    <textarea placeholder='text' type='text' name="text"><%= @post.text %></textarea>
+    <input type='submit' value='SENT'>
+  <% end %>
+</div>
