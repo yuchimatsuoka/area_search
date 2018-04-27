@@ -11,7 +11,8 @@ class PostsController < ApplicationController
   end
 
   def create
-    Post.create(area_id: post_params[:area_id],text: post_params[:text],user_id: current_user.id)
+    Post.create(small_area_id: post_params[:small_area_id],text: post_params[:text],user_id: current_user.id)
+    #binding.pry
   end
 
   def destroy
@@ -30,6 +31,6 @@ class PostsController < ApplicationController
 
   private
   def post_params
-    params.permit(:area_id,:text)
+    params.permit(:small_area_id,:text)
   end
 end

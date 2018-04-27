@@ -1,8 +1,7 @@
 <div class='contents row'>
   <div class='container'>
-  <%= form_tag('/posts',method: :post) do %>
+  <%= form_tag('..',method: :post) do %>
   <h3>投稿する</h3>
-  <input placeholder="Area Id" type="integer" name="area_id">
   <textarea cols='30' placeholder='text' type="text" name="text" rows='10'></textarea>
   <input type='submit' value='SENT'>
   <% end %>
