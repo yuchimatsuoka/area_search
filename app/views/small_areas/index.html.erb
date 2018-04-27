@@ -1,0 +1,16 @@
+<div class='contents row'>
+  <% @small_areas.each do |area| %>
+   <div class="content_area">
+        <div class="more">
+          <ul class='more_list'>
+              <li>
+                Area: <%= area.small_area_name %>
+              </li>
+              <li>
+                <%= link_to '詳細',"/areas/#{area.middle_area_code}/small_areas/#{area.small_area_code}",method: :get %>
+              </li>
+            </ul>
+        </div>
+    </div>
+  <% end %>
+</div>

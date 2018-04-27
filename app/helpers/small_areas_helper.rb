@@ -1,0 +1,2 @@
+module SmallAreasHelper
+end

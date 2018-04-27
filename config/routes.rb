@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
-  root 'posts#index'
+  root 'areas#index'
   devise_for :users
-  resources :posts
+  resources :areas do
+    resources :small_areas
+  end
 end

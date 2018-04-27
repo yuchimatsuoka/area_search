@@ -11,7 +11,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180423053403) do
+ActiveRecord::Schema.define(version: 20180426073725) do
+
+  create_table "areas", id: false, force: :cascade do |t|
+    t.text "middle_area_code", limit: 65535
+    t.text "middle_area_name", limit: 65535
+    t.text "small_area_code",  limit: 65535
+    t.text "small_area_name",  limit: 65535
+  end
 
   create_table "posts", force: :cascade do |t|
     t.text     "text",       limit: 65535
@@ -19,6 +26,29 @@ ActiveRecord::Schema.define(version: 20180423053403) do
     t.integer  "user_id",    limit: 4
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
+  end
+
+  create_table "shops", id: false, force: :cascade do |t|
+    t.text  "id",               limit: 65535
+    t.text  "name",             limit: 65535
+    t.text  "open",             limit: 65535
+    t.text  "midnight",         limit: 65535
+    t.text  "middle_area_name", limit: 65535
+    t.text  "middle_area_code", limit: 65535
+    t.text  "small_area_name",  limit: 65535
+    t.text  "small_area_code",  limit: 65535
+    t.text  "genre",            limit: 65535
+    t.text  "food_name",        limit: 65535
+    t.text  "price",            limit: 65535
+    t.float "rep_price",        limit: 53
+    t.text  "open_hour",        limit: 65535
+    t.float "start",            limit: 53
+    t.float "end",              limit: 53
+  end
+
+  create_table "small_areas", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|
