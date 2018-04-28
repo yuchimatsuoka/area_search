@@ -1,0 +1,344 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+
+```{r}
+library(tidyverse)
+library(httr)
+library(jsonlite)
+library(RMySQL)
+```
+
+```{r}
+apikey = "34757b64c1d01b1f"
+ft ='json'
+```
+
+```{r}
+URL = "http://webservice.recruit.co.jp/hotpepper/food/v1/"
+r <- httr::GET(URL,query=list(key=apikey,format='json'))
+food_list <- fromJSON(content(r,'text'))
+```
+
+```{r}
+food_category <- food_list$results$food$food_category %>% select(name) %>% 
+  bind_cols(food_list$results$food %>% select(name))
+food_category
+```
+
+## お店情報の取得(とりあえず範囲を絞って銀座)
+
+```{r}
+URL = "http://webservice.recruit.co.jp/hotpepper/gourmet/v1/"
+r <- httr::GET(URL,query=list(key=apikey,
+                             small_area = 'X010',
+                             count=20,
+                              format=ft))
+shops_in_ginza <- fromJSON(content(r,'text'))
+shops_in_ginza$results$shop
+```
+
+
+
+
+```{r}
+URL="http://webservice.recruit.co.jp/hotpepper/middle_area/v1/"
+r <- httr::GET(URL,query=list(key='34757b64c1d01b1f',
+                              large_area='Z011',#東京
+                              format=ft))
+res <- fromJSON(content(r,'text'))
+#res$results$middle_area
+middle_area_all <- list()
+middle_area_all$middle_area_name <- res$results$middle_area$name
+middle_area_all$middle_area_code <- res$results$middle_area$code
+middle_area_all <-as_tibble(middle_area_all)
+middle_area_all
+```
+
+
+##山手中心でいこう
+```{r}
+middle_area_yamanote <- c("銀座・有楽町・新橋・築地・月島",
+"水道橋・飯田橋・神楽坂",
+#"お台場",
+"東京・大手町・日本橋・人形町",
+"四ツ谷・麹町・市ヶ谷・九段下",
+"上野・御徒町・浅草",
+"北千住・日暮里・葛飾・荒川",
+"神田・神保町・秋葉原・御茶ノ水",
+"品川･目黒･田町･浜松町･五反田",
+"渋谷",
+"原宿・青山・表参道",
+"恵比寿・中目黒・代官山・広尾",
+"赤坂・六本木・麻布十番・西麻布",
+"池袋",
+"新宿",
+"新大久保・大久保",
+"巣鴨・大塚・駒込",
+"高田馬場")
+middle_area_yamanote <-middle_area_all %>% filter(middle_area_name %in% middle_area_yamanote)
+middle_area_yamanote <- middle_area_yamanote %>% mutate(middle_id=seq(1,nrow(middle_area_yamanote))) %>% select(middle_id,everything())
+middle_area_yamanote
+```
+
+## 各middle areaでどんなsmall areaが入っているのか抽出
+```{r}
+URL="http://webservice.recruit.co.jp/hotpepper/small_area/v1/"
+small_area_list=list()
+for(i in 1:length(middle_area_yamanote$middle_area_code)){
+  r <- httr::GET(URL,query=list(key='34757b64c1d01b1f',
+    middle_area=middle_area_yamanote$middle_area_code[i],
+                                format=ft))
+  res <- fromJSON(content(r,'text'))
+  small_area_list[[middle_area_yamanote$middle_area_name[i]]][['small_area_name']] <- res$results$small_area$name
+  small_area_list[[middle_area_yamanote$middle_area_name[i]]][['small_area_code']] <- res$results$small_area$code
+}
+small_area_list
+```
+
+```{r}
+small_area_list[[1]][[2]]
+#length(small_area_list)
+```
+```{r}
+length(small_area_list)
+names(small_area_list)
+```
+
+```{r}
+middle_area_yamanote
+```
+
+
+```{r}
+m <- dbDriver("MySQL")
+dbconnector <- dbConnect(m, dbname="area_search_development", user="root")
+dbWriteTable(dbconnector,name = 'areas',value=middle_area_yamanote,
+             append=FALSE,row.names=NA,overwrite=TRUE)
+dbDisconnect(dbconnector)
+```
+
+
+## 東京・大手町・日本橋・人形町
+
+```{r}
+url_main<-"http://webservice.recruit.co.jp/hotpepper/gourmet/v1/"
+r <- httr::GET(url_main,query=list(key='34757b64c1d01b1f',
+                                small_area=small_area_list$`北千住・日暮里・葛飾・荒川`$small_area_code[20],#"高野" 
+                                start=1,
+                                count=100,
+                                format=ft))
+res <- fromJSON(content(r,'text'))
+res$results$shop
+```
+
+```{r}
+parse_middle_area <- function(focused_small_area,j){
+  shop_df <- tibble()
+  i <- 0
+  while(TRUE){
+    r <- httr::GET(url_main,query=list(key='34757b64c1d01b1f',
+    small_area=focused_small_area$small_area_code[j],
+                                start=100*i+1,
+                                count=100,
+                                format='json'))
+    res <- fromJSON(content(r,'text'))
+    res_df <- res$results$shop
+    if(length(res_df)==0){
+      break
+    }
+    res_df <- res_df[res_df$genre$name %in% c('居酒屋','バー・カクテル','ダイニングバー'),]
+    if(is.null(res_df)){
+      i=i+1
+      next
+    }
+    tmp <- res_df %>% select(id,name,open,midnight) %>% 
+    bind_cols(res_df$middle_area %>% select(middle_area_name=name,middle_area_code=code)) %>% 
+    bind_cols(res_df$small_area %>% select(small_area_name=name,small_area_code=code)) %>% 
+    bind_cols(res_df$genre %>% select(genre=name)) %>% 
+    bind_cols(res_df$food %>% select(food_name=name)) %>% 
+    bind_cols(res_df$budget %>% select(price=name))
+  
+    shop_df <- shop_df %>% bind_rows(tmp)
+    i=i+1
+    if(nrow(res$results$shop)<100 ){
+      break
+    }
+  }
+  return(shop_df)
+}
+```
+
+
+```{r}
+
+shop_parsed <- tibble()
+for(i in 1:length(small_area_list)){
+  print(small_area_list[[i]])
+  for(j in 1:length(small_area_list[[i]][[1]])){
+    print(j)
+    shop_parsed <- shop_parsed %>% bind_rows(parse_middle_area(focused_small_area = small_area_list[[i]],j))
+  }
+}
+```
+
+```{r}
+#write_csv(shop_parsed,path = 'shops.csv')
+```
+
+
+```{r}
+shop_parsed %>% group_by(genre) %>% count
+```
+
+```{r}
+shop_parsed %>% group_by(food_name) %>% count() %>% arrange(desc(n))
+```
+
+```{r}
+ggplot(shop_parsed,aes(x=middle_area_name,fill=genre))+
+  geom_bar()+
+  theme_gray(base_family = "HiraKakuPro-W3")+
+  coord_flip()
+```
+
+
+
+```{r}
+ggplot(shop_parsed,aes(x=middle_area_name,fill=genre))+
+  geom_bar(position='fill')+
+  theme_gray(base_family = "HiraKakuPro-W3")+
+  coord_flip()
+```
+
+```{r}
+shop2 <- shop_parsed %>% mutate(price=str_replace(price,"円","")) %>% 
+  mutate(price1=as.numeric(str_extract(price,'^[0-9]+') )) %>%
+  mutate(price2=as.numeric(str_extract(price,"[0-9]+$"))) %>% 
+  mutate(rep_price=round((price1+price2)/2)) %>% 
+  select(-price1,-price2) 
+```
+
+
+```{r}
+str(shop2)
+```
+
+
+```{r}
+txt <- "月～土、祝前日: 18:00～翌5:00 （料理L.O. 翌4:00 ドリンクL.O. 翌4:00）日、祝日: 17:00～23:00 （料理L.O. 22:00 ドリンクL.O. 22:30）"
+str_extract(txt,'[0-9]+:[0-9]0～翌[0-9]:[0-9]0')
+```
+
+```{r}
+txt2 <- "月～日、祝日、祝前日: 11:00～15:30 （料理L.O. 14:30）17:00～23:00 （料理L.O. 22:00）"
+str_extract(txt,'[0-9]+:[0-9]0～2[0-3]:[0-9]0')
+```
+
+```{r}
+str_extract(txt,'[0-9]+:[0-9]0～翌[0-9]:[0-9]0|[0-9]+:[0-9]0～2[0-3]:[0-9]0')
+```
+
+
+```{r}
+shop3 <- shop2 %>% 
+  mutate(open_hour=str_extract(open,'[0-9][0-9]:[0-9][0-9]～翌[0-9]:[0-9][0-9]|[0-9]{1,2}:[0-9][0-9]～2[0-3]:[0-9][0-9]')) %>% 
+  filter(!is.na(open_hour)) %>% 
+  mutate(start=as.numeric(str_extract(open_hour,'^[0-9]+'))) %>%
+  mutate(end=sapply(str_split(open_hour,'～'),function(x)x[2])) %>% 
+  mutate(end=str_extract(end,"^.[0-9]")) %>% 
+  mutate(end=ifelse(str_detect(end,'翌'),24+as.numeric(str_extract(end,'[0-9]$')),as.numeric(end)))
+shop3
+```
+
+
+
+```{r}
+View(shop3)
+```
+
+```{r}
+#write_csv(shop3,'shops3.csv')
+```
+
+
+```{r}
+shop4 <- shop3 %>% 
+  mutate(o16=ifelse(start<=16&end>=16,1,0),
+         o17=ifelse(start<=17&end>=17,1,0),
+         o18=ifelse(start<=18&end>=18,1,0),
+         o19=ifelse(start<=19&end>=19,1,0),
+         o20=ifelse(start<=20&end>=20,1,0),
+         o21=ifelse(start<=21&end>=21,1,0),
+         o22=ifelse(start<=22&end>=22,1,0),
+         o23=ifelse(start<=23&end>=23,1,0),
+         o24=ifelse(start<=24&end>=24,1,0),
+         o25=ifelse(start<=25&end>=25,1,0),
+         o26=ifelse(start<=26&end>=26,1,0),
+         o27=ifelse(start<=27&end>=27,1,0),
+         o28=ifelse(start<=28&end>=28,1,0),
+         o29=ifelse(start<=29&end>=29,1,0)
+         )
+```
+
+
+
+
+```{r}
+shop5 <- shop4 %>% group_by(small_area_name,small_area_code,middle_area_code) %>% 
+  #
+  summarise(count = n(),
+            price_mean = round(mean(rep_price,2)),
+            o16=sum(o16),
+            o17=sum(o17),
+            o18=sum(o18),
+            o19=sum(o19),
+            o20=sum(o20),
+            o21=sum(o21),
+            o22=sum(o22),
+            o23=sum(o23),
+            o24=sum(o24),
+            o25=sum(o25)
+            )
+shop5
+```
+```{r}
+shop5$small_id <-seq(1,nrow(shop5))
+```
+
+
+```{r}
+shop5 <- shop5 %>% select(small_id,everything())
+```
+
+```{r}
+tmp <- middle_area_yamanote %>% select(middle_id,middle_area_code,middle_area_name)
+shop5<-shop5 %>% inner_join(tmp,by='middle_area_code') #%>% select(small_id,)
+```
+
+
+
+```{r}
+m <- dbDriver("MySQL")
+dbconnector <- dbConnect(m, dbname="area_search_development", user="root")
+dbWriteTable(dbconnector,name = 'small_areas',value=shop5,append=FALSE,row.names=NA,overwrite=TRUE)
+dbDisconnect(dbconnector)
+```
+
+```{r}
+shop3 %>% filter(middle_area_name=='新宿') %>% group_by(small_area_name) %>% count()
+```
+
+
+```{r}
+shop3 %>% filter(middle_area_name=='新宿')%>% filter(!is.na(rep_price))%>% mutate(rep_price=as.factor(rep_price)) %>% 
+  ggplot(aes(x=small_area_name,fill=rep_price))+
+  geom_bar(position='fill')+
+  theme_gray(base_family = "HiraKakuPro-W3")+
+  coord_flip()
+```
+
+
+
