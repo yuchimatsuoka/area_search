@@ -6,14 +6,15 @@
         <li>出発地１：<input name="origin1" placeholder="例：鶯谷"></li>
         <li>出発地２：<input name="origin2" placeholder="例：錦糸町"></li>
       </ul>
-      <%# if params[:origin1] != nil then %>
+      <% if @error then %>
       <input type='submit' value='調べる'>
-        <%# else %>
-      <!-- <input type='button' value='調べる'> -->
-      <%# end %>
+        <% else %>
+      <input type='button' value='調べる'>
+      <% end %>
     <% end %>
     <% if params[:origin1] != nil then %>
       <% if @status == 'success' then %>
+        <h3><%= @origin1 %>と<%= @origin2 %>から</h3>
         <ol class='more_list'>
           <% for i in 0..@recom_dest.length-14 %>
             <div class="content_area">
@@ -36,6 +37,43 @@
   </div>
 
 
+
+  <div class="content">
+    <h2>〇〇時まで飲みたい！</h2>
+    <%= form_tag(areas_path, method: :get) do %>
+      <ul>
+        <li>帰宅予定：
+          <select name ="tetsuya">
+            <option value="or24">深夜０時</option>
+            <option value="or25">深夜１時</option>
+            <option value="or26">深夜２時</option>
+            <option value="or27">深夜３時</option>
+            <option value="or28">深夜４時</option>
+            <option value="or29">深夜５時</option>
+          </select>
+        </li>
+      </ul>
+      <input type='submit' value='調べる'>
+    <% end %>
+    <% if params[:tetsuya] != nil then %>
+        <h3><%= @or %>でも飲めるのは </h3>
+        <ol class='more_list'>
+          <% for i in 0..@tetsuya_areas.length-1 %>
+            <div class="content_area">
+              <div class="more">
+                <li>
+                  <%= link_to @tetsuya_areas[i].small_area_name,
+                    area_small_area_path(area_id: @tetsuya_areas[i].area_id,id: @tetsuya_areas[i].small_id),method: :get %>
+                  <%= link_to "(周辺)",
+                    area_small_areas_path(area_id: @tetsuya_areas[i].area_id, query: "price_desc"),method: :get %>
+                  ：<%= (@tetsuya_areas_rate[i]*100).to_i %>％
+                </li>
+              </div>
+            </div>
+          <% end %>
+        </ol>
+    <% end %>
+  </div>
   <div class="content">
     <h2>○○が食べたい！</h2>
     <%= form_tag(areas_path, method: :get) do %>
@@ -62,6 +100,7 @@
       <input type='submit' value='調べる'>
     <% end %>
     <% if params[:food] != nil then %>
+        <h3><%= @f_name %>が食べられるのは</h3>
         <ol class='more_list'>
           <% for i in 0..@food_areas.length-1 %>
             <div class="content_area">
@@ -80,40 +119,8 @@
     <% end %>
   </div>
 
-  <div class="content">
-    <h2>〇〇時まで飲みたい！</h2>
-    <%= form_tag(areas_path, method: :get) do %>
-      <ul>
-        <li>帰宅予定：
-          <select name ="tetsuya">
-            <option value="or24">深夜０時</option>
-            <option value="or25">深夜１時</option>
-            <option value="or26">深夜２時</option>
-            <option value="or27">深夜３時</option>
-            <option value="or28">深夜４時</option>
-            <option value="or29">深夜５時</option>
-          </select>
-        </li>
-      </ul>
-      <input type='submit' value='調べる'>
-    <% end %>
-    <% if params[:tetsuya] != nil then %>
-        <ol class='more_list'>
-          <% for i in 0..@tetsuya_areas.length-1 %>
-            <div class="content_area">
-              <div class="more">
-                <li>
-                  <%= link_to @tetsuya_areas[i].small_area_name,
-                    area_small_area_path(area_id: @tetsuya_areas[i].area_id,id: @tetsuya_areas[i].small_id),method: :get %>
-                  <%= link_to "(周辺)",
-                    area_small_areas_path(area_id: @tetsuya_areas[i].area_id, query: "price_desc"),method: :get %>
-                  ：<%= (@tetsuya_areas_rate[i]*100).to_i %>％
-                </li>
-              </div>
-            </div>
-          <% end %>
-        </ol>
-    <% end %>
+  <div class='content'>
+    <ul><li>------------------------</li></ul>
   </div>
 
   <div class="content">

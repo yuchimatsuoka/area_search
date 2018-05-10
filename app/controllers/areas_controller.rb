@@ -14,31 +14,37 @@ class AreasController < ApplicationController
     # 営業時間
     @tetsuya_areas_rate = []
     if params[:tetsuya] == 'or24' then
+      @or = '深夜０時'
       @tetsuya_areas= SmallArea.order("or24 DESC").limit(5)
       @tetsuya_areas.each do |tetsuya_area|
         @tetsuya_areas_rate << tetsuya_area.or24
       end
     elsif params[:tetsuya] == 'or25' then
+      @or = '深夜１時'
       @tetsuya_areas= SmallArea.order("or25 DESC").limit(5)
       @tetsuya_areas.each do |tetsuya_area|
         @tetsuya_areas_rate << tetsuya_area.or25
       end
     elsif params[:tetsuya] == 'or26' then
+      @or = '深夜２時'
       @tetsuya_areas= SmallArea.order("or26 DESC").limit(5)
       @tetsuya_areas.each do |tetsuya_area|
         @tetsuya_areas_rate << tetsuya_area.or26
       end
     elsif params[:tetsuya] == 'or27' then
+      @or = '深夜３時'
       @tetsuya_areas= SmallArea.order("or27 DESC").limit(5)
       @tetsuya_areas.each do |tetsuya_area|
         @tetsuya_areas_rate << tetsuya_area.or27
       end
     elsif params[:tetsuya] == 'or28' then
+      @or = '深夜４時'
       @tetsuya_areas= SmallArea.order("or28 DESC").limit(5)
       @tetsuya_areas.each do |tetsuya_area|
         @tetsuya_areas_rate << tetsuya_area.or28
       end
     elsif params[:tetsuya] == 'or29' then
+      @or = '深夜５時'
       @tetsuya_areas= SmallArea.order("or29 DESC").limit(5)
       @tetsuya_areas.each do |tetsuya_area|
         @tetsuya_areas_rate << tetsuya_area.or29
@@ -53,13 +59,15 @@ class AreasController < ApplicationController
       # binding.pry
     end
 
-
-    if params[:origin1] != nil then
+    # binding.pry
+    if params[:origin1]!=nil && params[:origin2]!=nil && params[:origin1] != "" && params[:origin2] != "" then
       require 'net/http'
       require 'uri'
       require 'json'
       require 'daru'
       destinations=[]
+      @origin1 =params[:origin1]
+      @origin2 =params[:origin2]
       @small_areas= SmallArea.order("count DESC").limit(18)
       @small_areas.each do |small_area|
         destinations << small_area["small_area_name"]
@@ -113,6 +121,9 @@ class AreasController < ApplicationController
         @recom_dur0 = Array(df['dur_text0'])
         @recom_dur1 = Array(df['dur_text1'])
          # binding.pry
+        @error = false
+    else
+      @error = true
     end
     # binding.pry
     # if params[:tetsuya] != nil then
