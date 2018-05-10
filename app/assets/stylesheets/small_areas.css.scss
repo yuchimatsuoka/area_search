@@ -1,3 +1,60 @@
 // Place all the styles related to the small_areas controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.small_areas{
+
+.plot{
+  margin:1px;
+  border-bottom: dashed 0.1rem orange;
+  span{
+  font-size:18px;
+
+  }
+}
+
+ol.more_list{
+  counter-reset:number; /*数字をリセット*/
+  list-style-type: none!important; /*数字を一旦消す*/
+  padding:0.1rem;
+  background: #f5faff;
+}
+ol.more_list li{
+  border-bottom: dashed 0.1rem orange;
+  position: relative;
+  padding-left: 30px;
+  line-height: 1.5em;
+  padding: 0.5em 0.5em 0.5em 30px;
+  font-size: 1.4rem;
+}
+
+ol.more_list li:before{
+  /* 以下数字をつける */
+  position: absolute;
+  counter-increment: number;
+  content: counter(number);
+  /*以下数字のデザイン変える*/
+  display:inline-block;
+  background: #5c9ee7;
+  color: white;
+  font-family: 'Avenir','Arial Black','Arial',sans-serif;
+  font-weight:bold;
+  font-size: 15px;
+  border-radius: 50%;
+  left: 0;
+  width: 25px;
+  height: 25px;
+  line-height: 25px;
+  text-align:center;
+  /*以下 上下中央寄せのため*/
+  top: 50%;
+  -moz-transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+
+}
+
+
+}

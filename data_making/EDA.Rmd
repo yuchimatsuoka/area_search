@@ -190,6 +190,10 @@ for(i in 1:length(small_area_list)){
 
 
 ```{r}
+read_csv("/")
+```
+
+```{r}
 shop_parsed %>% group_by(genre) %>% count
 ```
 
@@ -321,10 +325,10 @@ shop5<-shop5 %>% inner_join(tmp,by='middle_area_code') #%>% select(small_id,)
 
 
 ```{r}
-m <- dbDriver("MySQL")
-dbconnector <- dbConnect(m, dbname="area_search_development", user="root")
-dbWriteTable(dbconnector,name = 'small_areas',value=shop5,append=FALSE,row.names=NA,overwrite=TRUE)
-dbDisconnect(dbconnector)
+#m <- dbDriver("MySQL")
+#dbconnector <- dbConnect(m, dbname="area_search_development", user="root")
+#dbWriteTable(dbconnector,name = 'small_areas',value=shop5,append=FALSE,row.names=NA,overwrite=TRUE)
+#dbDisconnect(dbconnector)
 ```
 
 ```{r}
@@ -339,6 +343,18 @@ shop3 %>% filter(middle_area_name=='新宿')%>% filter(!is.na(rep_price))%>% mut
   theme_gray(base_family = "HiraKakuPro-W3")+
   coord_flip()
 ```
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

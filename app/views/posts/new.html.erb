@@ -1,9 +1,9 @@
-<div class='contents row'>
+<div class='contents'>
   <div class='container'>
-  <%= form_tag('..',method: :post) do %>
-  <h3>投稿する</h3>
-  <textarea cols='30' placeholder='text' type="text" name="text" rows='10'></textarea>
-  <input type='submit' value='SENT'>
-  <% end %>
-</div>
+    <%= form_tag('..',method: :post) do %>
+      <h3>投稿する</h3>
+      <textarea cols='30' placeholder='感想を記入してください。' type="text" name="text" rows='10'></textarea>
+      <input type='submit' value='SENT'>
+    <% end %>
+  </div>
 </div>

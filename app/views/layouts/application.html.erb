@@ -2,26 +2,28 @@
 <html>
 <head>
   <title>AreaSearch</title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+    <%= javascript_include_tag "//www.google.com/jsapi", "chartkick" %>
+  <%= stylesheet_link_tag    'application', media: 'screen', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
+  <!-- <meta name="apple-mobile-web-app-capable" content="yes"> -->
 </head>
 
-<body>
-  <header>
-    <div class='clearfix'>
-    <div class="heading">
-      <h1><a href="/" class='title'>Area searcher</a></h1>
+<body class='<%="#{controller.controller_name}"%>'>
+  <header class='header'>
+    <div class="header_bar">
+      <h1><a href="/">Area searcher</a></h1>
     </div>
     <div class="navbar">
-      <% if user_signed_in? %>
-          <%= link_to "ログアウト", destroy_user_session_path, method: :delete %>
-      <% else %>
-          <%= link_to "ログイン", new_user_session_path, class: 'post' %>
-          <%= link_to "新規登録", new_user_registration_path, class: 'post' %>
-      <% end %>
+      <ul id="nav">
+        <% if user_signed_in? %>
+          <li><%= link_to "ログアウト", destroy_user_session_path, method: :delete %></li>
+        <% else %>
+          <li><%= link_to "ログイン", new_user_session_path, class: 'post' %></li>
+          <li><%= link_to "新規登録", new_user_registration_path, class: 'post' %></li>
+        <% end %>
+      </ul>
     </div>
-  </div>
   </header>
     <%= yield %>
 </body>

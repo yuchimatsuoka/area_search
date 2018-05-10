@@ -1,9 +1,43 @@
 <div class='contents'>
-  <% @small_areas.each do |area| %>
-    <div class="content_area">
-      <ul class='more_list'>
-        <li><%= link_to area.small_area_name,"/areas/#{area.middle_id}/small_areas/#{area.small_id}",method: :get %></li>
-      </ul>
-    </div>
+  <h2><%= @small_areas[0].area["middle_area_name"] %></h2>
+  <div class="sort">
+    <%= link_to '価格で降順', area_small_areas_path(query: "price_desc"), method: :get%>
+    <%= link_to '価格で昇順', area_small_areas_path(query: "price_asc"), method: :get%>
+    <%= link_to '店舗数で降順', area_small_areas_path(query: "count_desc"), method: :get%>
+    <%= link_to '店舗数で昇順', area_small_areas_path(query: "count_asc"), method: :get%>
+  </div>
+  <div class="content">
+    <% if params[:query].include?('price') then%>
+      <h3>平均価格</h3>
+    <% elsif params[:query].include?('count') %>
+      <h3>店舗数</h3>
+    <% end %>
+    <ol class='more_list'>
+      <% @small_areas.each do |area| %>
+        <div class="content_area">
+          <li><%= link_to area.small_area_name,"/areas/#{area.area_id}/small_areas/#{area.small_id}",method: :get %>：
+            <% if params[:query].include?('price') then%>
+              <%= area.price_mean.to_i %>円
+            <% elsif params[:query].include?('count') %>
+              <%= area.count %>店舗
+            <% end %>
+          </li>
+        </div>
+      <% end %>
+    </ol>
+  </div>
+
+  <% if false %>
+  <div class="content">
+      <% if params[:query].include?('price') then%>
+       <!--  <h3>価格</h3> -->
+        <%= bar_chart @average_prices%>
+      <% elsif params[:query].include?('count') %>
+        <!-- <h3>店舗数</h3> -->
+        <%= bar_chart @shops_counts %>
+      <% else %>
+        <%= bar_chart @average_prices%>
+      <% end %>
+  </div>
   <% end %>
 </div>

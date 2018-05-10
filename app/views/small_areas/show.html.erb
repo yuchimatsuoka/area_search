@@ -1,18 +1,35 @@
-Small Area: <%= @small_area.small_area_name %>
+<div class="heading_area">
+  <h2>エリア：<%= @small_area.small_area_name %></h2>
+</div>
+<div class='contents'>
+  <p class="text"><%= link_to 'お店を詳しくみる',"https://www.hotpepper.jp/SA11/#{@small_area.area[:middle_area_code]}/#{@small_area.small_area_code}/",method: :get %></p>
+  <div class="plot">
+    <span class='plot_title'>お店スタイル</span>
+    <%= pie_chart @small_area.shops.group(:genre).count %>
+  </div>
+  <div class="plot">
+    <span class='plot_title'>食べ物ジャンル</span>
+    <%= pie_chart @food_genres %>
+  </div>
+  <div class="plot">
+    <span class='plot_title'>開店数</span>
+    <%= line_chart @open_shops_number %>
+  </div>
+  <p class='text'><%= link_to '投稿する',"/areas/#{@small_area.area_id}/small_areas/#{@small_area.small_id}/posts/new/",method: :get %></p>
 
-<p><%= link_to '投稿',"/areas/#{@small_area.middle_id}/small_areas/#{@small_area.small_id}/posts/new/",method: :get %></p>
-
-<div>
+  <div class="content_posts">
     <% @posts.each do |post| %>
-      <% if user_signed_in? && current_user.id==post.user_id %>
-        <div class='more'>
-          <ul class='more_list'>
-            <li><%= link_to '編集',"/areas/#{@small_area.middle_id}/small_areas/#{@small_area.small_id}/posts/#{post.id}/edit", method: :get %></li>
-            <li><%= link_to '削除', "/areas/#{@small_area.middle_id}/small_areas/#{@small_area.small_id}/posts/#{post.id}",method: :delete %></li>
-          </ul>
-        </div>
-      <% end %>
-        <%= simple_format(post.text) %>
-      <% end %>
-
+      <div class="content_post">
+        投稿者：<%= post.user.nickname %><%= simple_format(post.text) %>
+        <% if user_signed_in? && current_user.id==post.user_id %>
+          <div class='more'>
+            <ul class='edit_list'>
+             <li><%= link_to '編集',"/areas/#{@small_area.area_id}/small_areas/#{@small_area.small_id}/posts/#{post.id}/edit", method: :get %></li>
+              <li><%= link_to '削除', "/areas/#{@small_area.area_id}/small_areas/#{@small_area.small_id}/posts/#{post.id}",method: :delete %></li>
+            </ul>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
 </div>
