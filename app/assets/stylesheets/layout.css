@@ -59,36 +59,85 @@ span{
 
 header{
   height:48px;
+  background-color: gray;
 }
 
-.header_bar {
-  height: 32px;
-  width: 100%;
-  /*background-color:  ;*/
-  /*background-color:   #CCCCCC;*/
-  /*margin: 0 auto;*/
-  /*float: left;*/
-  text-align: center;
-  /*padding: 1px;*/
+.header_left {
+  height:100%;
+  width:70%;
+  float:left;
 }
 
-h1{
-  height: 100%;
-  background-color: #FF8104;
-  color: #ff0000;
-}
-
-.navbar {
-  height: 16px;
-  width: 100%;
-  background-color: white;
-  /*float: right;*/
-  text-align: right;
-  ul{
-      margin-right: 10px;
-    display: inline;
+ h1{
+    height: 48px;
+    background-color: #FF8104;
+    color: #ff0000;
   }
+
+
+
+.header_right {
+  height:48px;
+  width:30%;
+  float: right;
+  background-color: blue;
 }
+
+.header_right_left {
+  height:48px;
+  width:50%;
+  float: left;
+  background-color: red;
+}
+
+.header_right_right {
+  height:48px;
+  width:50%;
+  float: right;
+  background-color: green;
+}
+
+/*いい感じなリンクを作る*/
+.link_box{
+    position: relative;
+    width:100%;
+    height:100%;
+    /*padding:5%;*/
+    margin:0px auto;
+}
+
+.link_box a{
+  position: absolute;
+   margin: 0 auto;
+   width: 100%;
+   height: 100%;
+}
+
+
+div.img_part{
+  width:100%;
+  height:60%;
+  text-align: center;
+}
+
+.img_part img{
+   width: 40%;
+   height: 70%;
+   padding-top: 10%;
+}
+
+div.text_part{
+  width:100%;
+  height:40%;
+  text-align: center;
+}
+
+.text_part span{
+  font-size: 10px;
+  color:#ffffff;
+  font-weight:bold;
+}
+/*
 
 .clearfix:after {
   content: "";

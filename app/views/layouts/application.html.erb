@@ -13,20 +13,53 @@
 
 <body class='<%="#{controller.controller_name}"%>'>
   <header class='header'>
-    <div class="header_bar">
-      <h1><a href="/">Area searcher</a></h1>
-    </div>
-    <div class="navbar">
-      <ul id="nav">
-        <% if user_signed_in? %>
-          <li><%= link_to "ログアウト", destroy_user_session_path, method: :delete %></li>
-        <% else %>
-          <li><%= link_to "ログイン", new_user_session_path, class: 'post' %></li>
-          <li><%= link_to "新規登録", new_user_registration_path, class: 'post' %></li>
-        <% end %>
-      </ul>
-    </div>
+    <div class="clearfix">
+
+      <div class="header_left">
+        <h1><a href="/">Area searcher</a></h1>
+      </div>
+
+      <div class="header_right">
+          <% if user_signed_in? %>
+            <div class="header_right_right">
+              <%= link_to "ログアウト", destroy_user_session_path, method: :delete %>
+            </div>
+          <% else %>
+            <div class="clearfix">
+              <div class="header_right_left">
+                <div class='link_box'>
+                  <a href="<%= new_user_session_path%>">
+                    <div class="img_part">
+                      <img src="/assets/icons8-入る-filled-50.png" alt="login" />
+                    </div>
+                    <div class="text_part">
+                      <span>ログイン</span>
+                    </div>
+                  </a>
+               </div>
+             </div>
+            <div class="header_right_right">
+              <div class='link_box'>
+                  <a href="<%= new_user_registration_path%>">
+                    <div class="img_part">
+                      <img src="/assets/icons8-ユーザグループ追加-filled-50.png" alt="signuo" />
+                    </div>
+                    <div class="text_part">
+                      <span>新規登録</span>
+                    </div>
+                  </a>
+               </div>
+
+            </div>
+          </div>
+          <% end %>
+      </div>
+
+    <div>
+
+
   </header>
+
     <%= yield %>
 </body>
 <footer>
