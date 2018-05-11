@@ -176,7 +176,7 @@ div.text_part{
 .contents{
   width:95%;
   height:auto;
-  overflow:hidden
+  overflow:hidden;
   margin: 10px auto;
   .content{
       border-bottom: dashed 0.1rem orange;
