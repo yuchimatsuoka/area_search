@@ -16,13 +16,30 @@
     <div class="clearfix">
 
       <div class="header_left">
-        <h1><a href="/">Area searcher</a></h1>
+        <div id="sub_title">
+          <span>今夜の飲み屋がきまらないあなたに送る...</span>
+        </div>
+        <div class="main_title">
+          <div id="title">
+            <a href="/">ぶら呑み＠東京</a>
+          </div>
+        </div>
       </div>
 
       <div class="header_right">
           <% if user_signed_in? %>
             <div class="header_right_right">
-              <%= link_to "ログアウト", destroy_user_session_path, method: :delete %>
+              <%#= link_to "ログアウト", destroy_user_session_path, method: :delete %>
+              <div class='link_box'>
+                  <a href="<%= destroy_user_session_path %>", data-method="delete">
+                    <div class="img_part">
+                      <img src="/assets/icons8-エクスポート-filled-50.png" alt="signuo" />
+                    </div>
+                    <div class="text_part">
+                      <span>ログアウト</span>
+                    </div>
+                  </a>
+               </div>
             </div>
           <% else %>
             <div class="clearfix">

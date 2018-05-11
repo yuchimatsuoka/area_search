@@ -27,7 +27,6 @@ h1{
   /*border-bottom:dotted 1px #17A4E5;*/
   font-size:30px;
   font-weight:bold;
-  line-height:1;
   /*position:relative;*/
 }
 
@@ -66,15 +65,9 @@ header{
   height:100%;
   width:70%;
   float:left;
+  margin: 0 auto;
+  background-color: orange;
 }
-
- h1{
-    height: 48px;
-    background-color: #FF8104;
-    color: #ff0000;
-  }
-
-
 
 .header_right {
   height:48px;
@@ -82,6 +75,42 @@ header{
   float: right;
   background-color: blue;
 }
+
+
+/*いい感じなタイトルを作る*/
+div#sub_title{
+  width:100%;
+  height:16px;
+  background-color: blue;
+  padding: 3px 0 0 7px;
+}
+
+div#sub_title span{
+  font-size: 10px;
+  color:#ffffff;
+  font-weight:bold;
+  display: block;
+}
+
+.main_title{
+  width:100%;
+  height:29px;
+  background-color: green;
+}
+
+div#title{
+  height: 100%;
+  padding: 0 0 0 7px;
+}
+
+div#title a{
+  font-size: 23px;
+  color: #ffffff;
+  display : block;
+}
+
+
+/*いい感じなリンクを作る*/
 
 .header_right_left {
   height:48px;
@@ -96,8 +125,6 @@ header{
   float: right;
   background-color: green;
 }
-
-/*いい感じなリンクを作る*/
 .link_box{
     position: relative;
     width:100%;
@@ -137,7 +164,8 @@ div.text_part{
   color:#ffffff;
   font-weight:bold;
 }
-/*
+
+/* ここまで*/
 
 .clearfix:after {
   content: "";
@@ -148,7 +176,7 @@ div.text_part{
 .contents{
   width:95%;
   height:auto;
-  /*overflow:hidden*/
+  overflow:hidden
   margin: 10px auto;
   .content{
       border-bottom: dashed 0.1rem orange;
