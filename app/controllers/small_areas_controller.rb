@@ -23,6 +23,7 @@ class SmallAreasController < ApplicationController
   end
 
   def show
+    # binding.pry
     @small_area = SmallArea.find(params[:id])
     @posts = @small_area.posts
     @open_shops_number = { "16時" => @small_area.o16,

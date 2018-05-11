@@ -5,6 +5,7 @@ class PostsController < ApplicationController
   end
 
   def new
+    #binding.pry
   end
 
   def show
