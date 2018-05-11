@@ -53,3 +53,6 @@ gem 'devise'
 gem "chartkick"
 gem 'daru'
 
+group :production do
+  gem 'rails_12factor'
+end
