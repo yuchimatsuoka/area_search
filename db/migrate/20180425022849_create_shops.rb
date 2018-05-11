@@ -1,17 +1,36 @@
 class CreateShops < ActiveRecord::Migration
   def change
     create_table :shops do |t|
-      t.string :name
+      t.text :name
       t.text :open
-      t.string :midnight
-      t.string :middle_area_name
-      t.string :middle_area_code
-      t.string :small_area_name
-      t.string :small_area_code
-      t.string :genre
-      t.string :food_name
-      t.string :price
-      t.timestamps null: false
+      t.text :midnight
+      t.text :middle_area_name
+      t.text :middle_area_code
+      t.text :small_area_name
+      t.text :small_area_code
+      t.text :genre
+      t.text :food_name
+      t.text :price
+      t.float :rep_price
+      t.text :open_hour
+      t.integer :start
+      t.integer :end
+      t.float :o16
+      t.float :o17
+      t.float :o18
+      t.float :o19
+      t.float :o20
+      t.float :o21
+      t.float :o22
+      t.float :o23
+      t.float :o24
+      t.float :o25
+      t.float :o26
+      t.float :o27
+      t.float :o28
+      t.float :o29
+      t.integer :area_id
+      t.integer :small_area_id
     end
   end
 end
