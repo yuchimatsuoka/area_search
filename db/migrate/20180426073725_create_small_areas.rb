@@ -20,6 +20,13 @@ class CreateSmallAreas < ActiveRecord::Migration
       t.float :o27
       t.float :o28
       t.float :o29
+      t.float :or23
+      t.float :or24
+      t.float :or25
+      t.float :or26
+      t.float :or27
+      t.float :or28
+      t.float :or29
       t.integer :イタリア料理
       t.integer :インド料理
       t.integer :おでん

@@ -4,7 +4,7 @@ class CreateAreas < ActiveRecord::Migration
       t.text :middle_area_code
       t.integer :count
       t.float :price_mean
-      t.text :small_area_name
+      t.text :middle_area_name
     end
   end
 end
