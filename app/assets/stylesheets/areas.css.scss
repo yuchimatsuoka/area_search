@@ -3,6 +3,20 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 .areas{
 
+
+h3::before{
+  content: " ";
+  display:inline-block;
+  background:url(/assets/check.png);
+    position: relative;
+    width: 16px;
+    height: 16px;
+    background-size:contain;
+    vertical-align:middle;
+
+}
+
+
 .textarea{
   width: 30%;
   height: 200px;

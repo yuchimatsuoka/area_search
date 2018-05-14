@@ -1,6 +1,7 @@
 <div class='contents'>
+  <h2>シチュエーション検索</h2>
   <div class='content'>
-    <h2>２人で集まる</h2>
+    <h3>２人で集まる</h3>
     <%= form_tag(areas_path, method: :get) do %>
       <ul>
         <li>出発地１：<input name="origin1" placeholder="例：鶯谷"></li>
@@ -39,7 +40,7 @@
 
 
   <div class="content">
-    <h2>〇〇時まで飲みたい！</h2>
+    <h3>〇〇時まで飲みたい！</h3>
     <%= form_tag(areas_path, method: :get) do %>
       <ul>
         <li>帰宅予定：
@@ -75,7 +76,7 @@
     <% end %>
   </div>
   <div class="content">
-    <h2>○○が食べたい！</h2>
+    <h3>○○が食べたい！</h3>
     <%= form_tag(areas_path, method: :get) do %>
       <ul>
         <li>食べ物：
