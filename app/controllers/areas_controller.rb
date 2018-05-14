@@ -83,6 +83,7 @@ class AreasController < ApplicationController
 
       res = Net::HTTP.get_response(uri)
       parsed = JSON.parse(res.body)
+      # binding.pry
       # puts parsed['rows'][0]
       dur_text0=[]
       dur_value0=[]

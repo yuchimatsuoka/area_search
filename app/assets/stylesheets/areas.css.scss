@@ -36,15 +36,15 @@ ol.more_list{
   counter-reset:number; /*数字をリセット*/
   list-style-type: none!important; /*数字を一旦消す*/
   padding:0.1rem;
-  background: #f5faff;
+
 }
 ol.more_list li{
-  border-bottom: dashed 0.1rem orange;
+  border-bottom: 1px solid #DDD;
   position: relative;
   padding-left: 30px;
   line-height: 1.5em;
   padding: 0.5em 0.5em 0.5em 30px;
-  font-size: 1.4rem;
+  font-size: 16px;
 }
 
 ol.more_list li:before{
@@ -54,7 +54,7 @@ ol.more_list li:before{
   content: counter(number);
   /*以下数字のデザイン変える*/
   display:inline-block;
-  background: #5c9ee7;
+  background: #808080ba;
   color: white;
   font-family: 'Avenir','Arial Black','Arial',sans-serif;
   font-weight:bold;
@@ -76,6 +76,7 @@ ol.more_list li:before{
 }
 
 
+
 ul.bottom_list {
   font-size: 13px;
   width: 80%;
@@ -89,18 +90,6 @@ ul.bottom_list li {
   padding-right: 10px;
 }
 
-
-.edit_list {
-  list-style-type: none;
-  font-size: 0;
-}
-.edit_list li {
-  /*background-color: #222222;*/
-  display: inline-block;
-  font-size: 2rem;
-  width: 5%;
-  text-align: right;
-}
 
 
 }

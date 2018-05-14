@@ -8,14 +8,14 @@
         <li>出発地２：<input name="origin2" placeholder="例：錦糸町"></li>
       </ul>
       <% if @error then %>
-      <input type='submit' value='調べる'>
+      <input class="search" type='submit' value='調べる'>
         <% else %>
-      <input type='button' value='調べる'>
+      <input class="search" type='button' value='調べる'>
       <% end %>
     <% end %>
     <% if params[:origin1] != nil then %>
       <% if @status == 'success' then %>
-        <h3><%= @origin1 %>と<%= @origin2 %>から</h3>
+        <h4><%= @origin1 %>と<%= @origin2 %>から</h4>
         <ol class='more_list'>
           <% for i in 0..@recom_dest.length-14 %>
             <div class="content_area">
@@ -54,10 +54,10 @@
           </select>
         </li>
       </ul>
-      <input type='submit' value='調べる'>
+      <input class="search" type='submit' value='調べる'>
     <% end %>
     <% if params[:tetsuya] != nil then %>
-        <h3><%= @or %>でも飲めるのは </h3>
+        <h4><%= @or %>でも飲めるのは </h4>
         <ol class='more_list'>
           <% for i in 0..@tetsuya_areas.length-1 %>
             <div class="content_area">
@@ -76,7 +76,7 @@
     <% end %>
   </div>
   <div class="content">
-    <h3>○○が食べたい！</h3>
+    <h3>〇〇時まで食べたい！</h3>
     <%= form_tag(areas_path, method: :get) do %>
       <ul>
         <li>食べ物：
@@ -98,10 +98,10 @@
           </select>
         </li>
       </ul>
-      <input type='submit' value='調べる'>
+      <input class="search" type='submit' value='調べる'>
     <% end %>
     <% if params[:food] != nil then %>
-        <h3><%= @f_name %>が食べられるのは</h3>
+        <h4><%= @f_name %>が食べられるのは</h4>
         <ol class='more_list'>
           <% for i in 0..@food_areas.length-1 %>
             <div class="content_area">
@@ -120,12 +120,9 @@
     <% end %>
   </div>
 
-  <div class='content'>
-    <ul><li>------------------------</li></ul>
-  </div>
 
   <div class="content">
-    <h3>中エリア一覧</h3>
+    <h2>中エリア一覧</h2>
     <ul class='bottom_list'>
      <% @areas.each do |area| %>
         <li><%= link_to area.middle_area_name, area_small_areas_path(area_id: area.area_id,query: "price_desc"),method: :get %></li>

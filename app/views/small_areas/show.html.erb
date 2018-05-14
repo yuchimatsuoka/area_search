@@ -1,26 +1,37 @@
-<div class="heading_area">
-  <h2>エリア：<%= @small_area.small_area_name %></h2>
-</div>
+
 <div class='contents'>
-  <p class="text"><%= link_to 'お店を詳しくみる',"https://www.hotpepper.jp/SA11/#{@small_area.area[:middle_area_code]}/#{@small_area.small_area_code}/",method: :get %></p>
+  <div class="heading_area">
+    <h2>エリア：<%= @small_area.small_area_name %></h2>
+      <p class="text"><%= link_to 'お店を詳しくみる',"https://www.hotpepper.jp/SA11/#{@small_area.area[:middle_area_code]}/#{@small_area.small_area_code}/",method: :get %></p>
+  </div>
+
   <div class="plot">
     <span class='plot_title'>お店スタイル</span>
     <%= pie_chart @small_area.shops.group(:genre).count %>
   </div>
+
   <div class="plot">
     <span class='plot_title'>食べ物ジャンル</span>
     <%= pie_chart @food_genres %>
   </div>
+
   <div class="plot">
     <span class='plot_title'>開店数</span>
     <%= line_chart @open_shops_number %>
   </div>
-  <p class='text'><%= link_to '投稿する',"/areas/#{@small_area.area_id}/small_areas/#{@small_area.small_id}/posts/new/",method: :get %></p>
+
 
   <div class="content_posts">
+      <h2>みんなの感想</h2>
+      <p class='text'><%= link_to '投稿する',"/areas/#{@small_area.area_id}/small_areas/#{@small_area.small_id}/posts/new/",method: :get %></p>
     <% @posts.each do |post| %>
       <div class="content_post">
-        投稿者：<%= post.user.nickname %><%= simple_format(post.text) %>
+        <div class="poster">
+          投稿者：<%= post.user.nickname %>
+        </div>
+        <div class="content_text"
+          <%= simple_format(post.text) %>
+        </div>
         <% if user_signed_in? && current_user.id==post.user_id %>
           <div class='more'>
             <ul class='edit_list'>

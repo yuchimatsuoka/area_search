@@ -6,7 +6,7 @@
 
 .plot{
   margin:1px;
-  border-bottom: dashed 0.1rem orange;
+  border-bottom: 1px solid #DDD;
   span{
   font-size:18px;
 
@@ -17,10 +17,10 @@ ol.more_list{
   counter-reset:number; /*数字をリセット*/
   list-style-type: none!important; /*数字を一旦消す*/
   padding:0.1rem;
-  background: #f5faff;
+/*  background: #f5faff; */
 }
 ol.more_list li{
-  border-bottom: dashed 0.1rem orange;
+  border-bottom: 1px solid #DDD;
   position: relative;
   padding-left: 30px;
   line-height: 1.5em;
@@ -35,7 +35,7 @@ ol.more_list li:before{
   content: counter(number);
   /*以下数字のデザイン変える*/
   display:inline-block;
-  background: #5c9ee7;
+  background: #808080ba;
   color: white;
   font-family: 'Avenir','Arial Black','Arial',sans-serif;
   font-weight:bold;
@@ -53,8 +53,43 @@ ol.more_list li:before{
     -o-transform: translateY(-50%);
     -ms-transform: translateY(-50%);
     transform: translateY(-50%);
-
 }
+
+ol.more_list li:after {
+    content: "";
+    display: block;
+    width: 6px;
+    height: 6px;
+    background-color: transparent;
+    border-top: solid 3px #808080;
+    border-right: solid 3px #808080;
+    margin-top: -5px;
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    -webkit-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+
+
+.edit_list {
+  list-style-type: none;
+  font-size: 0;
+}
+
+.edit_list li {
+  /*background-color: #222222;*/
+  display: inline;
+  font-size: 12px;
+  width: 5%;
+  text-align: right;
+  margin-right: 2px;
+}
+
+.edit_list a:link { color: #0000ff; }
+.edit_list a:visited { color: #000080; }
 
 
 }
