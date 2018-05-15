@@ -10,6 +10,7 @@ class AreasController < ApplicationController
     @areas.each do |area|
       @average_prices[area.middle_area_name]=area.price_mean
     end
+    # binding.pry
 
     # 営業時間
     @tetsuya_areas_rate = []

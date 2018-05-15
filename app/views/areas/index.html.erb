@@ -5,13 +5,13 @@
     <%= form_tag(areas_path, method: :get) do %>
       <ul>
         <li>出発地１：<input name="origin1" placeholder="例：鶯谷"></li>
-        <li>出発地２：<input name="origin2" placeholder="例：錦糸町"></li>
+        <li>出発地２：<input name="origin2" placeholder="例：浅草"></li>
       </ul>
-      <% if @error then %>
+      <%# if @error then %>
       <input class="search" type='submit' value='調べる'>
-        <% else %>
-      <input class="search" type='button' value='調べる'>
-      <% end %>
+        <%# else %>
+      <!-- <input class="search" type='button' value='調べる'> -->
+      <%# end %>
     <% end %>
     <% if params[:origin1] != nil then %>
       <% if @status == 'success' then %>
@@ -76,7 +76,7 @@
     <% end %>
   </div>
   <div class="content">
-    <h3>〇〇時まで食べたい！</h3>
+    <h3>〇〇を食べたい！</h3>
     <%= form_tag(areas_path, method: :get) do %>
       <ul>
         <li>食べ物：

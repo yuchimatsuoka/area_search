@@ -222,6 +222,7 @@ footer{
 }
 
 footer span{
+  vertical-align: middle;
   font-size: 10px;
   color:#ffffff;
 }
