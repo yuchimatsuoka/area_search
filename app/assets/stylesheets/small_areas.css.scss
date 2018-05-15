@@ -14,7 +14,7 @@
 }
 
 ol.more_list{
-  counter-reset:number; /*数字をリセット*/
+  counter-reset:number 3; /*数字をリセット*/
   list-style-type: none!important; /*数字を一旦消す*/
   padding:0.1rem;
 /*  background: #f5faff; */
@@ -28,7 +28,58 @@ ol.more_list li{
   font-size: 1.4rem;
 }
 
-ol.more_list li:before{
+ol.more_list div.content_area:nth-child(1) li:before{
+ position: absolute;
+  content: url(/assets/icons8-オリンピックの金メダル-16.png);
+  /*以下数字のデザイン変える*/
+  display:inline-block;
+  left: 0;
+  width: 25px;
+  height: 25px;
+  /*以下 上下中央寄せのため*/
+  top: 50%;
+  -moz-transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
+ol.more_list div.content_area:nth-child(2) li:before{
+ position: absolute;
+  content: url(/assets/icons8-オリンピック-銀メダル-16.png);
+  /*以下数字のデザイン変える*/
+  display:inline-block;
+  left: 0;
+  width: 25px;
+  height: 25px;
+  /*以下 上下中央寄せのため*/
+  top: 50%;
+  -moz-transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
+ol.more_list div.content_area:nth-child(3) li:before{
+ position: absolute;
+  content: url(/assets/icons8-オリンピック-銅メダル-16.png);
+  /*以下数字のデザイン変える*/
+  display:inline-block;
+  left: 0;
+  width: 25px;
+  height: 25px;
+  /*以下 上下中央寄せのため*/
+  top: 50%;
+  -moz-transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
+ol.more_list div.content_area:nth-child(n+4) li:before{
   /* 以下数字をつける */
   position: absolute;
   counter-increment: number;
@@ -54,6 +105,7 @@ ol.more_list li:before{
     -ms-transform: translateY(-50%);
     transform: translateY(-50%);
 }
+
 
 ol.more_list li:after {
     content: "";

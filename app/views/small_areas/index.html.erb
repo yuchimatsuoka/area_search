@@ -15,7 +15,7 @@
     <ol class='more_list'>
       <% @small_areas.each do |area| %>
         <div class="content_area">
-          <li><img src="/assets/icons8-オリンピックの金メダル-16.png" alt="signuo" />
+          <li>
             <%= link_to area.small_area_name,"/areas/#{area.area_id}/small_areas/#{area.small_id}",method: :get %>：
             <% if params[:query].include?('price') then%>
               <%= area.price_mean.to_i %>円

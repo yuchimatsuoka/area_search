@@ -85,44 +85,48 @@ class AreasController < ApplicationController
       parsed = JSON.parse(res.body)
       # binding.pry
       # puts parsed['rows'][0]
-      dur_text0=[]
-      dur_value0=[]
-      dur_text1=[]
-      dur_value1=[]
-      for i in 0..destinations.length-1
-        dest0=parsed['rows'][0]['elements'][i]
-        dest1=parsed['rows'][1]['elements'][i]
-        if dest0['status'] =='OK' then
-          dur_text0 << dest0['duration']['text']
-          dur_value0 << dest0['duration']['value']
-          dur_text1 << dest1['duration']['text']
-          dur_value1 << dest1['duration']['value']
-        else
-          dur_text0 << 'null'
-          dur_value0 << 100000000000
-          dur_text1 << 'null'
-          dur_value1 << 100000000000
+      if parsed['rows'][0]['elements'][0]['status']=="NOT_FOUND" || parsed['rows'][1]['elements'][0]['status']=="NOT_FOUND" then
+        @error = true
+      else
+        dur_text0=[]
+        dur_value0=[]
+        dur_text1=[]
+        dur_value1=[]
+        for i in 0..destinations.length-1
+          dest0=parsed['rows'][0]['elements'][i]
+          dest1=parsed['rows'][1]['elements'][i]
+          if dest0['status'] =='OK' then
+            dur_text0 << dest0['duration']['text']
+            dur_value0 << dest0['duration']['value']
+            dur_text1 << dest1['duration']['text']
+            dur_value1 << dest1['duration']['value']
+          else
+            dur_text0 << 'null'
+            dur_value0 << 100000000000
+            dur_text1 << 'null'
+            dur_value1 << 100000000000
+          end
         end
-      end
-        if dur_text0.uniq.length ==1 then
-          @status= "fail"
-        else
-          @status= "success"
+          if dur_text0.uniq.length ==1 then
+            @status= "fail"
+          else
+            @status= "success"
+          end
+          df= Daru::DataFrame.new(
+            "dest" => destinations,
+            "dur_text0" => dur_text0,
+            'dur_value0' => dur_value0,
+            "dur_text1" => dur_text1,
+            "dur_value1" => dur_value1
+            )
+          df['sum'] = df['dur_value0']+df['dur_value1']
+          df = df.sort(["sum"],ascending: true)
+          @recom_dest = Array(df['dest'])
+          @recom_dur0 = Array(df['dur_text0'])
+          @recom_dur1 = Array(df['dur_text1'])
+           # binding.pry
+          @error = false
         end
-        df= Daru::DataFrame.new(
-          "dest" => destinations,
-          "dur_text0" => dur_text0,
-          'dur_value0' => dur_value0,
-          "dur_text1" => dur_text1,
-          "dur_value1" => dur_value1
-          )
-        df['sum'] = df['dur_value0']+df['dur_value1']
-        df = df.sort(["sum"],ascending: true)
-        @recom_dest = Array(df['dest'])
-        @recom_dur0 = Array(df['dur_text0'])
-        @recom_dur1 = Array(df['dur_text1'])
-         # binding.pry
-        @error = false
     else
       @error = true
     end
