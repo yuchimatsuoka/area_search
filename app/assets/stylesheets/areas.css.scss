@@ -4,6 +4,19 @@
 .areas{
 
 
+h2{
+  text-align:center;
+}
+
+.content h2{
+  margin-top:30px;
+}
+
+h4{
+  margin: 15px 0 0 0;
+  text-align:center;
+}
+
 h3::before{
   content: " ";
   display:inline-block;
@@ -13,9 +26,7 @@ h3::before{
     height: 16px;
     background-size:contain;
     vertical-align:middle;
-
 }
-
 
 .textarea{
   width: 30%;
@@ -43,7 +54,7 @@ ol.more_list li{
   position: relative;
   padding-left: 30px;
   line-height: 1.5em;
-  padding: 0.5em 0.5em 0.5em 30px;
+  padding: 0.5em 0.5em 0.1em 30px;
   font-size: 1.4rem;
 }
 
@@ -125,8 +136,6 @@ ol.more_list div.content_area:nth-child(n+4) li:before{
     transform: translateY(-50%);
 }
 
-
-
 ul.bottom_list {
   font-size: 13px;
   width: 80%;
@@ -136,8 +145,9 @@ ul.bottom_list {
 }
 
 ul.bottom_list li {
-  margin: 0 1rem;
-  padding-right: 10px;
+  margin: 0 auto;
+  padding-right: 0px;
+  text-align:center;
 }
 
 

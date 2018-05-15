@@ -4,24 +4,19 @@
 
 .small_areas{
 
-
 .heading_area{
   display: inline-block;
 }
-
 .small_area_name{
   display:inline-block;
 }
-
 .small_area_name h2{
   margin: 0;
 }
-
 .hpg_link{
   display: inline-block;
   vertical-align: middle;
 }
-
 .hpg_link img{
   height:18px;
   width:18px;
@@ -46,7 +41,7 @@ ol.more_list li{
   position: relative;
   padding-left: 30px;
   line-height: 1.5em;
-  padding: 0.5em 0.5em 0.5em 30px;
+  padding: 0.5em 0.5em 0.1em 30px;
   font-size: 1.4rem;
 }
 
@@ -148,11 +143,27 @@ ol.more_list li:after {
 
 
 
+.heading_review{
+  margin-top:20px;
+}
+.review{
+  display:inline-block;
+}
+.review h2{
+  margin: 0;
+}
+.post{
+  display: inline-block;
+  vertical-align: middle;
+  border: solid 1px #6091d3;/*線*/
+  border-radius: 3px;
+}
+
+
 .edit_list {
   list-style-type: none;
   font-size: 0;
 }
-
 .edit_list li {
   /*background-color: #222222;*/
   display: inline;
@@ -161,7 +172,6 @@ ol.more_list li:after {
   text-align: right;
   margin-right: 2px;
 }
-
 .edit_list a:link { color: #0000ff; }
 .edit_list a:visited { color: #000080; }
 

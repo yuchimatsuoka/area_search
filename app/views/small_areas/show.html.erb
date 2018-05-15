@@ -35,8 +35,16 @@
 
 
   <div class="content_posts">
-      <h2>みんなの感想</h2>
-      <p class='text'><%= link_to '投稿する',"/areas/#{@small_area.area_id}/small_areas/#{@small_area.small_id}/posts/new/",method: :get %></p>
+    <div class="heading_review">
+      <div class='review'>
+        <h2>みんなの感想</h2>
+      </div>
+      <div class='post'>
+        <%= link_to '投稿する',"/areas/#{@small_area.area_id}/small_areas/#{@small_area.small_id}/posts/new/",method: :get %>
+      </div>
+    </div>
+
+
     <% @posts.each do |post| %>
       <div class="content_post">
         <div class="poster">
