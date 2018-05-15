@@ -4,12 +4,34 @@
 
 .small_areas{
 
+
+.heading_area{
+  display: inline-block;
+}
+
+.small_area_name{
+  display:inline-block;
+}
+
+.small_area_name h2{
+  margin: 0;
+}
+
+.hpg_link{
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.hpg_link img{
+  height:18px;
+  width:18px;
+}
+
 .plot{
   margin:1px;
   border-bottom: 1px solid #DDD;
   span{
   font-size:18px;
-
   }
 }
 

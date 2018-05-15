@@ -1,8 +1,14 @@
 
 <div class='contents'>
   <div class="heading_area">
-    <h2>エリア：<%= @small_area.small_area_name %></h2>
-      <p class="text"><%= link_to 'お店を詳しくみる',"https://www.hotpepper.jp/SA11/#{@small_area.area[:middle_area_code]}/#{@small_area.small_area_code}/",method: :get %></p>
+    <div class='small_area_name'>
+      <h2>エリア：<%= @small_area.small_area_name %></h2>
+    </div>
+      <!-- <p class="text"><%#= link_to 'お店を詳しくみる',"https://www.hotpepper.jp/SA11/#{@small_area.area[:middle_area_code]}/#{@small_area.small_area_code}/",method: :get %></p> -->
+    <div class='hpg_link'>
+      <a href = "https://www.hotpepper.jp/SA11/<%= @small_area.area[:middle_area_code] %>/<%= @small_area.small_area_code %>/">
+      <img src="/assets/HPG.jpg" alt="signuo" /></a>
+    </div>
   </div>
 
   <div class="plot">
