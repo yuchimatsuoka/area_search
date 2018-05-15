@@ -50,7 +50,10 @@ class SmallAreasController < ApplicationController
       top << ["その他",sonota]
       @food_genres = top
     end
-     # binding.pry
+
+    @price_bunpu = @small_area.shops.group(:rep_price).count
+
+      # binding.pry
   end
 
 

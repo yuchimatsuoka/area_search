@@ -6,6 +6,18 @@
   </div>
 
   <div class="plot">
+    <span class='plot_title'>予算分布</span>
+    <%= bar_chart @price_bunpu %>
+  </div>
+
+
+  <div class="plot">
+    <span class='plot_title'>開店数</span>
+    <%= line_chart @open_shops_number %>
+  </div>
+
+
+  <div class="plot">
     <span class='plot_title'>お店スタイル</span>
     <%= pie_chart @small_area.shops.group(:genre).count %>
   </div>
@@ -13,11 +25,6 @@
   <div class="plot">
     <span class='plot_title'>食べ物ジャンル</span>
     <%= pie_chart @food_genres %>
-  </div>
-
-  <div class="plot">
-    <span class='plot_title'>開店数</span>
-    <%= line_chart @open_shops_number %>
   </div>
 
 
