@@ -120,9 +120,9 @@
     <% end %>
   </div>
 
-
-  <div class="content">
     <h2>中エリア一覧</h2>
+  <div class="content">
+
     <ul class='bottom_list'>
      <% @areas.each do |area| %>
         <li><%= link_to area.middle_area_name, area_small_areas_path(area_id: area.area_id,query: "price_desc"),method: :get %></li>

@@ -6,6 +6,7 @@
     <%= link_to '店舗数で降順', area_small_areas_path(query: "count_desc"), method: :get%>
     <%= link_to '店舗数で昇順', area_small_areas_path(query: "count_asc"), method: :get%>
   </div>
+
   <div class="content">
     <% if params[:query].include?('price') then%>
       <h3>平均価格</h3>
