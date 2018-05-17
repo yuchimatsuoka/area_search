@@ -14,16 +14,18 @@
     <% end %>
     <ol class='more_list'>
       <% @small_areas.each do |area| %>
-        <div class="content_area">
-          <li>
-            <%= link_to area.small_area_name,"/areas/#{area.area_id}/small_areas/#{area.small_id}",method: :get %>：
-            <% if params[:query].include?('price') then%>
-              <%= area.price_mean.to_i %>円
-            <% elsif params[:query].include?('count') %>
-              <%= area.count %>店舗
-            <% end %>
-          </li>
-        </div>
+        <%= link_to "/areas/#{area.area_id}/small_areas/#{area.small_id}", class: 'list-content' do %>
+          <div class="content_area">
+            <li>
+               <%= area.small_area_name %>：
+              <% if params[:query].include?('price') then%>
+                <%= area.price_mean.to_i %>円
+              <% elsif params[:query].include?('count') %>
+                <%= area.count %>店舗
+              <% end %>
+            </li>
+          </div>
+          <% end %>
       <% end %>
     </ol>
   </div>
